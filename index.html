@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Copa do Mundo 2026</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Tabela de Jogos da Copa do Mundo 2026</h1>
+<p class="descricao">Acompanhe os jogos, horários e locais da competição.</p>
+
+<div class="container" id="container"></div>
+
+<script>
+const times = [
+"Brasil","Argentina","França","Alemanha","Espanha","Portugal",
+"Itália","Holanda","Inglaterra","Bélgica","México","EUA",
+"Canadá","Japão","Coreia do Sul","Uruguai","Chile","Colômbia",
+"Peru","Suécia","Dinamarca","Suíça","Áustria","Marrocos",
+"Senegal","Nigéria","Gana","Egito","Camarões","Austrália",
+"Nova Zelândia","Irlanda","Escócia","Turquia","Grécia",
+"Polônia","Hungria","Romênia","Argélia","Tunísia",
+"Irã","Arábia Saudita","Qatar","Emirados Árabes"
+];
+
+const container = document.getElementById("container");
+
+const diasSemana = [
+"Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"
+];
+
+function getCor(i){
+    const bloco = i % 8;
+    if(bloco < 3) return "blue";
+    if(bloco < 5) return "red";
+    return "cyan";
+}
+
+function corDia(i){
+    return Math.floor((i-1)/25) % 2 === 0 ? "redDia" : "blueDia";
+}
+
+for(let i = 1; i <= 100; i++){
+
+    let time1 = times[Math.floor(Math.random()*times.length)];
+    let time2 = times[Math.floor(Math.random()*times.length)];
+    let local = times[Math.floor(Math.random()*times.length)];
+
+    let data = new Date(2026, 5, i);
+
+    let diaSemana = diasSemana[data.getDay()];
+    let dia = String(data.getDate()).padStart(2, '0');
+    let mes = String(data.getMonth() + 1).padStart(2, '0');
+
+    let hora = (16 + (i % 6)).toString().padStart(2, '0') + ":00";
+
+    const card = `
+    <div class="card">
+        <div class="dia ${corDia(i)}">
+            ${diaSemana} - ${dia}/${mes} - ${hora}
+        </div>
+
+        <div class="jogo ${getCor(i)}">
+            <span>${time1}</span>
+            <span class="data">${local}</span>
+            <span>${time2}</span>
+        </div>
+    </div>
+    `;
+
+    container.innerHTML += card;
+}
+</script>
+
+</body>
+</html>
